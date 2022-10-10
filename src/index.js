@@ -1,11 +1,9 @@
-#! /usr/bin/env node
-
 import chalk from "chalk";
 import { program } from "commander";
-import create from "../lib/create.js";
-import pkg from "../package.json" assert { type: "json" };
+import create from "./create.js";
 
-program.name("gostarter").usage("<command> [option]").version(pkg.version);
+
+program.name("gostarter").usage("<command> [option]").version('1.0.0');
 
 program
   .command("create <project-name>")
