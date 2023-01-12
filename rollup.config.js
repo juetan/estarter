@@ -20,3 +20,21 @@ export default {
     exportConditions: ['node']
   }), commonjs()],
 };
+
+/** @type {import('rollup').RollupOptions} */
+export default {
+  input: "./src/index.js",
+  output: {
+    file: "./dist/index.js",
+    plugins: [terser()]
+  },
+  plugins: [
+    json(),
+    nodeResolve({
+      resolveOnly: (module) => module === 'string_decoder' || !isBuiltIn(module),
+      preferBuiltins: false,
+      exportConditions: ["node"]
+    }),
+    commonjs()
+  ]
+}
