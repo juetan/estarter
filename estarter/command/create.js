@@ -41,7 +41,7 @@ export default async (dirName, options) => {
       fs.copyFileSync(fromPath, destPath);
     }
     if (stat.isDirectory()) {
-      fs.mkdir(destPath, {recursive: true});
+      fs.mkdirSync(destPath, {recursive: true});
       for (const fileName of fs.readdirSync(fromPath)) {
         const iFromPath = path.resolve(fromPath, fileName);
         const iDestPath = path.resolve(destPath, fileName);
@@ -49,13 +49,7 @@ export default async (dirName, options) => {
       }
     }
   }
-
-  const fileNames = fs.readdirSync(templateDir);
-  for (const fileName of fileNames) {
-    const fromPath = path.join(templateDir, fileName);
-    const destPath = path.join(dirPath, fileName);
-    copy(fromPath, destPath);
-  }
+  copy(templateDir, dirPath);
 
   console.log(`\n ${chalk.green('创建完成，现在你可以运行以下命令：')} \n`);
   console.log(` cd ${dirName}`);
