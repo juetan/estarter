@@ -1,25 +1,54 @@
-export interface TdAffixProps {
+export interface Type1 {
+  /** 城市名称 */
+  cityName?: string;
   /**
-   * 指定滚动的容器。数据类型为 String 时，会被当作选择器处理，进行节点查询。示例：'body' 或 () => document.body
-   * @default () => (() => window)
+   * 创建时间
+   * @format date-time
    */
-  container: any;
+  createAt?: string;
   /**
-   * @desc 距离容器顶部达到指定距离后触发固定
-   * @default 0
+   * 项目负责人
+   * @format int32
    */
-  offsetBottom?: number;
+  employeeId: number;
+  /** 员工名称 */
+  employeeName?: string;
+  /** @format int32 */
+  id?: number;
   /**
-   * @desc 距离容器底部达到指定距离后触发固定
-   * @default 0
+   * 是否删除（1：删除，0：未删除）
+   * @format int32
    */
-  offsetTop?: number;
+  isDelete?: number;
+  /** 项目所在城市编号 */
+  projectCity: string;
+  /** 项目描述 */
+  projectDescription?: string;
+  /** 项目名称 */
+  projectName: string;
+  /** 项目所在省份编号 */
+  projectProvince: string;
+  /** 项目所在区县编号 */
+  projectTown?: string;
   /**
-   * @desc 固钉定位层级，样式默认为 500
+   * 项目类型（0：其他项目，1：城轨项目）
+   * @format int32
    */
-  zIndex?: number;
+  projectType: number;
+  /** 省份名称 */
+  provinceName?: string;
+  /** 区县名称 */
+  townName?: string;
   /**
-   * @desc 固定状态发生变化时触发
+   * 修改时间
+   * @format date-time
    */
-  onFixedChange?: (affixed: boolean, context: {top: number}) => void;
+  updateAt?: string;
+}
+
+class Api {
+  todo: <T>(arg: T) => 0;
+  do() {
+    this.todo<Type1>(1 as any);
+  }
 }

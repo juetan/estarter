@@ -1,1 +1,178 @@
-[{"name":"TdAffixProps","children":[{"name":"container","type":"any","isOptionnal":false,"jsDocs":{"kind":24,"description":"\r\n指定滚动的容器。数据类型为 String 时，会被当作选择器处理，进行节点查询。示例：'body' 或 () => document.body","tags":[{"kind":25,"tagName":"default","text":"() => (() => window)"}]}},{"name":"offsetBottom","type":"number","isOptionnal":true,"jsDocs":{"kind":24,"description":"","tags":[{"kind":25,"tagName":"desc","text":"距离容器顶部达到指定距离后触发固定"},{"kind":25,"tagName":"default","text":"0"}]}},{"name":"offsetTop","type":"number","isOptionnal":true,"jsDocs":{"kind":24,"description":"","tags":[{"kind":25,"tagName":"desc","text":"距离容器底部达到指定距离后触发固定"},{"kind":25,"tagName":"default","text":"0"}]}},{"name":"zIndex","type":"number","isOptionnal":true,"jsDocs":{"kind":24,"description":"","tags":[{"kind":25,"tagName":"desc","text":"固钉定位层级，样式默认为 500"}]}},{"name":"onFixedChange","type":"(affixed: boolean, context: {top: number}) => void","isOptionnal":true,"jsDocs":{"kind":24,"description":"","tags":[{"kind":25,"tagName":"desc","text":"固定状态发生变化时触发"}]}}]}]
+[
+  {
+    "name": "TdAffixProps",
+    "children": [
+      {
+        "name": "container",
+        "type": "any",
+        "isOptionnal": false,
+        "jsDocs": {
+          "kind": 24,
+          "description": "\r\n指定滚动的容器。数据类型为 String 时，会被当作选择器处理，进行节点查询。示例：'body' 或 () => document.body",
+          "tags": [{ "kind": 25, "tagName": "default", "text": "() => (() => window)" }]
+        }
+      },
+      {
+        "name": "offsetBottom",
+        "type": "number",
+        "isOptionnal": true,
+        "jsDocs": {
+          "kind": 24,
+          "description": "",
+          "tags": [
+            { "kind": 25, "tagName": "desc", "text": "距离容器顶部达到指定距离后触发固定" },
+            { "kind": 25, "tagName": "default", "text": "0" }
+          ]
+        }
+      },
+      {
+        "name": "offsetTop",
+        "type": "number",
+        "isOptionnal": true,
+        "jsDocs": {
+          "kind": 24,
+          "description": "",
+          "tags": [
+            { "kind": 25, "tagName": "desc", "text": "距离容器底部达到指定距离后触发固定" },
+            { "kind": 25, "tagName": "default", "text": "0" }
+          ]
+        }
+      },
+      {
+        "name": "zIndex",
+        "type": "number",
+        "isOptionnal": true,
+        "jsDocs": {
+          "kind": 24,
+          "description": "",
+          "tags": [{ "kind": 25, "tagName": "desc", "text": "固钉定位层级，样式默认为 500" }]
+        }
+      },
+      {
+        "name": "onFixedChange",
+        "type": "(affixed: boolean, context: { top: number }) => void",
+        "isOptionnal": true,
+        "jsDocs": {
+          "kind": 24,
+          "description": "",
+          "tags": [{ "kind": 25, "tagName": "desc", "text": "固定状态发生变化时触发" }]
+        }
+      }
+    ]
+  },
+  {
+    "name": "ComBeihaiOpsDomainBaseInfoProjectVoResponse",
+    "children": [
+      {
+        "name": "cityName",
+        "type": "string",
+        "isOptionnal": true,
+        "jsDocs": { "kind": 24, "description": "城市名称", "tags": [] }
+      },
+      {
+        "name": "createAt",
+        "type": "string",
+        "isOptionnal": true,
+        "jsDocs": {
+          "kind": 24,
+          "description": "\r\n创建时间",
+          "tags": [{ "kind": 25, "tagName": "format", "text": "date-time" }]
+        }
+      },
+      {
+        "name": "employeeId",
+        "type": "number",
+        "isOptionnal": false,
+        "jsDocs": {
+          "kind": 24,
+          "description": "\r\n项目负责人",
+          "tags": [{ "kind": 25, "tagName": "format", "text": "int32" }]
+        }
+      },
+      {
+        "name": "employeeName",
+        "type": "string",
+        "isOptionnal": true,
+        "jsDocs": { "kind": 24, "description": "员工名称", "tags": [] }
+      },
+      {
+        "name": "id",
+        "type": "number",
+        "isOptionnal": true,
+        "jsDocs": { "kind": 24, "description": "", "tags": [{ "kind": 25, "tagName": "format", "text": "int32" }] }
+      },
+      {
+        "name": "isDelete",
+        "type": "number",
+        "isOptionnal": true,
+        "jsDocs": {
+          "kind": 24,
+          "description": "\r\n是否删除（1：删除，0：未删除）",
+          "tags": [{ "kind": 25, "tagName": "format", "text": "int32" }]
+        }
+      },
+      {
+        "name": "projectCity",
+        "type": "string",
+        "isOptionnal": false,
+        "jsDocs": { "kind": 24, "description": "项目所在城市编号", "tags": [] }
+      },
+      {
+        "name": "projectDescription",
+        "type": "string",
+        "isOptionnal": true,
+        "jsDocs": { "kind": 24, "description": "项目描述", "tags": [] }
+      },
+      {
+        "name": "projectName",
+        "type": "string",
+        "isOptionnal": false,
+        "jsDocs": { "kind": 24, "description": "项目名称", "tags": [] }
+      },
+      {
+        "name": "projectProvince",
+        "type": "string",
+        "isOptionnal": false,
+        "jsDocs": { "kind": 24, "description": "项目所在省份编号", "tags": [] }
+      },
+      {
+        "name": "projectTown",
+        "type": "string",
+        "isOptionnal": true,
+        "jsDocs": { "kind": 24, "description": "项目所在区县编号", "tags": [] }
+      },
+      {
+        "name": "projectType",
+        "type": "number",
+        "isOptionnal": false,
+        "jsDocs": {
+          "kind": 24,
+          "description": "\r\n项目类型（0：其他项目，1：城轨项目）",
+          "tags": [{ "kind": 25, "tagName": "format", "text": "int32" }]
+        }
+      },
+      {
+        "name": "provinceName",
+        "type": "string",
+        "isOptionnal": true,
+        "jsDocs": { "kind": 24, "description": "省份名称", "tags": [] }
+      },
+      {
+        "name": "townName",
+        "type": "string",
+        "isOptionnal": true,
+        "jsDocs": { "kind": 24, "description": "区县名称", "tags": [] }
+      },
+      {
+        "name": "updateAt",
+        "type": "string",
+        "isOptionnal": true,
+        "jsDocs": {
+          "kind": 24,
+          "description": "\r\n修改时间",
+          "tags": [{ "kind": 25, "tagName": "format", "text": "date-time" }]
+        }
+      }
+    ]
+  }
+]

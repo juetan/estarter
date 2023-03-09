@@ -1,0 +1,61 @@
+
+ { 
+ title: '城市名称', 
+ dataIndex: 'cityName', 
+ },
+ { 
+ title: '创建时间', 
+ dataIndex: 'createAt', 
+ },
+ { 
+ title: '项目负责人', 
+ dataIndex: 'employeeId', 
+ },
+ { 
+ title: '员工名称', 
+ dataIndex: 'employeeName', 
+ },
+ { 
+ title: 'id', 
+ dataIndex: 'id', 
+ },
+ { 
+ title: '是否删除', 
+ dataIndex: 'isDelete', 
+ },
+ { 
+ title: '项目所在城市编号', 
+ dataIndex: 'projectCity', 
+ },
+ { 
+ title: '项目描述', 
+ dataIndex: 'projectDescription', 
+ },
+ { 
+ title: '项目名称', 
+ dataIndex: 'projectName', 
+ },
+ { 
+ title: '项目所在省份编号', 
+ dataIndex: 'projectProvince', 
+ },
+ { 
+ title: '项目所在区县编号', 
+ dataIndex: 'projectTown', 
+ },
+ { 
+ title: '项目类型', 
+ dataIndex: 'projectType', 
+ },
+ { 
+ title: '省份名称', 
+ dataIndex: 'provinceName', 
+ },
+ { 
+ title: '区县名称', 
+ dataIndex: 'townName', 
+ },
+ { 
+ title: '修改时间', 
+ dataIndex: 'updateAt', 
+ },

@@ -1,6 +1,10 @@
 // @ts-nocheck
-import {add} from './util';
-import juetan from 'juetan';
+// import { add } from "./a";
+// import b from './b.png';
 
-console.log(juetan);
-console.log(add(1, 2));
+const todo = async () => {
+  const { add } = await import("./a");
+  return add(1, 2);
+}
+
+console.log(todo(1, 2));
