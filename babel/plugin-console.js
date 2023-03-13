@@ -5,7 +5,7 @@ const traverse = require('@babel/traverse').default;
 const generate = require('@babel/generator').default;
 const types = require('@babel/types');
 const template = require('@babel/template').default;
-const {declare} = require('@babel/helper-plugin-utils');
+const { declare } = require('@babel/helper-plugin-utils');
 
 const sourceCode = `
   console.log(1);
@@ -38,15 +38,13 @@ const v1 = (sourceCode) => {
         path.node.callee.object.name === 'console' &&
         ['log', 'info', 'debug'].includes(path.node.callee.property.name)
       ) {
-        const {line, column} = path.node.loc.start;
-        path.node.arguments.unshift(
-          types.stringLiteral(`location: ${line}, ${column}`),
-        );
+        const { line, column } = path.node.loc.start;
+        path.node.arguments.unshift(types.stringLiteral(`location: ${line}, ${column}`));
       }
     },
   });
 
-  const {code} = generate(ast);
+  const { code } = generate(ast);
 
   console.log(code);
 };
@@ -58,22 +56,20 @@ const v2 = (sourceCode) => {
     plugins: ['jsx'],
   });
 
-  const calleeNames = ['log', 'info', 'debug', 'error'].map(
-    (i) => `console.${i}`,
-  );
+  const calleeNames = ['log', 'info', 'debug', 'error'].map((i) => `console.${i}`);
 
   traverse(ast, {
     CallExpression(path, state) {
       const calleeName = generate(path.node.callee).code;
       if (calleeNames.includes(calleeName)) {
-        const {line, column} = path.node.loc.start;
+        const { line, column } = path.node.loc.start;
         const arg = types.stringLiteral(`location: ${line}, ${column}`);
         path.node.arguments.unshift(arg);
       }
     },
   });
 
-  const {code} = generate(ast);
+  const { code } = generate(ast);
 
   console.log(code);
 };
@@ -85,9 +81,7 @@ const v3 = (sourceCode) => {
     plugins: ['jsx'],
   });
 
-  const calleeNames = ['log', 'info', 'debug', 'error'].map(
-    (i) => `console.${i}`,
-  );
+  const calleeNames = ['log', 'info', 'debug', 'error'].map((i) => `console.${i}`);
 
   traverse(ast, {
     CallExpression(path, state) {
@@ -96,11 +90,9 @@ const v3 = (sourceCode) => {
       }
       const calleeName = generate(path.node.callee).code;
       if (calleeNames.includes(calleeName)) {
-        const {line, column} = path.node.loc.start;
+        const { line, column } = path.node.loc.start;
 
-        const node = template.expression(
-          `console.log('location v3: ${line}, ${column}')`,
-        )();
+        const node = template.expression(`console.log('location v3: ${line}, ${column}')`)();
         node.isNew = true;
 
         if (path.findParent((p) => p.isJSXElement())) {
@@ -113,14 +105,14 @@ const v3 = (sourceCode) => {
     },
   });
 
-  const {code} = generate(ast);
+  const { code } = generate(ast);
 
   console.log(code);
 };
 
 // v4: 改造为babel插件
 const v4 = declare((api, options, dirname) => {
-  const {types, template} = api;
+  const { types, template } = api;
   const callerNames = ['log', 'info', 'debug', 'error'];
   const calleeNames = callerNames.map((i) => `console.${i}`);
 
@@ -133,7 +125,7 @@ const v4 = declare((api, options, dirname) => {
         }
         const calleeName = generate(path.node.callee).code;
         if (calleeNames.includes(calleeName)) {
-          const {line, column} = path.node.loc.start;
+          const { line, column } = path.node.loc.start;
 
           const expression = `console.log('v4: ${dirname} ${line}, ${column}')`;
           const node = template.expression(expression)();

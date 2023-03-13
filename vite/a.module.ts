@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-export * from "@/../vite/b.module";
+export * from '@/../vite/b.module';
 // import png from "./123.png";
 // import { sub } from "app";
 // import { join } from "path";

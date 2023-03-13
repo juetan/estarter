@@ -1,13 +1,13 @@
 // @ts-nocheck
-const { transformFileSync } = require("@babel/core");
-const { plugin: consolePlugin } = require("./plugin-console");
-const path = require("path");
+const { transformFileSync } = require('@babel/core');
+const path = require('path');
+const { plugin: consolePlugin } = require('./plugin-console');
 
-const result = transformFileSync(path.join(__dirname, "./code/source.js"), {
+const result = transformFileSync(path.join(__dirname, './code/source.js'), {
   plugins: [[consolePlugin, { dd: 123 }]],
   parserOpts: {
-    sourceType: "unambiguous",
-    plugins: ["jsx"],
+    sourceType: 'unambiguous',
+    plugins: ['jsx'],
   },
 });
 
