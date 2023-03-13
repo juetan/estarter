@@ -1,6 +1,9 @@
-import puppeteer from "puppeteer";
+import puppeteer from 'puppeteer';
 
-export const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+export const sleep = (ms) =>
+  new Promise((res) => {
+    setTimeout(res, ms);
+  });
 export const delay = 200;
 
 export async function useBrowser(options = {}) {
@@ -8,7 +11,7 @@ export async function useBrowser(options = {}) {
     headless: false,
     defaultViewport: null,
     devtools: true,
-    args: ["--start-maximized"],
+    args: ['--start-maximized'],
     ...options,
   });
   const page = (await browser.pages())[0];
