@@ -59,7 +59,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "cz-conventional-changelog"
+      "path": "@commitlint/prompt"
     }
   },
   "devDependencies": {
@@ -72,6 +72,7 @@
     "@babel/types": "^7.20.7",
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
+    "@commitlint/prompt": "^17.4.4",
     "@rollup/plugin-commonjs": "^23.0.0",
     "@rollup/plugin-image": "^3.0.2",
     "@rollup/plugin-json": "^4.1.0",
