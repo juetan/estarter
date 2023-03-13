@@ -26,7 +26,10 @@ export const download = async (repo, dest, options = {}) => {
 
 const app = cac('estarter');
 
-export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = (ms) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 
 app
   .command('create [name]', '创建新项目')
@@ -88,39 +91,39 @@ app.command('generate <type>', '生成指定类型的模板');
 //  帮助: estarter -h [命令]
 
 app.help((args) => {
-  return args
-    .map((arg) => {
-      const { title } = arg;
-      let { body } = arg;
-      if (body.startsWith('estarter/')) {
-        return null;
-      }
+  const result = [];
 
-      if (title === 'Usage') {
-        body = body.replace('$ ', '');
-        return {
-          title: '用法',
-          body,
-        };
-      }
+  args.forEach((arg) => {
+    let { title, body } = arg;
 
-      if (title === 'Commands') {
-        return { title: '命令', body };
-      }
+    if (body.startsWith('estarter/')) {
+      return;
+    }
 
-      if (title?.startsWith('For more info')) {
-        return null;
-      }
+    if (title?.startsWith('For more info')) {
+      return;
+    }
 
-      if (title === 'Options') {
-        body = body.replace('Display version number', '查看当前版本号');
-        body = body.replace('Display this message', '查看帮助信息');
-        return { title: '选项', body: `${body}\n` };
-      }
+    if (title === 'Usage') {
+      title = '用法';
+      body = body.replace('$ ', '');
+    }
 
-      return arg;
-    })
-    .filter(Boolean);
+    if (title === 'Commands') {
+      title = '命令';
+    }
+
+    if (title === 'Options') {
+      title = '选项';
+      body = body.replace('Display version number', '查看当前版本号');
+      body = body.replace('Display this message', '查看帮助信息');
+      body = `${body}\n`;
+    }
+
+    result.push({ title, body });
+  });
+
+  return result;
 });
 
 // app.outputHelp("dd")
@@ -132,6 +135,7 @@ app.version('0.0.1');
 app.usage('用于初始化项目的命令行工具');
 
 console.log(getLOGO());
+
 app.parse();
 
 // const args = minimist(process.argv.slice(2), {})
