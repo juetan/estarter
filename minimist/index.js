@@ -31,7 +31,10 @@ export const download = async (repo, dest, options = {}) => {
 
 const app = cac('estarter');
 
-export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = (ms) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 
 app
   .command('init [name]', '创建新项目')
@@ -85,50 +88,43 @@ app
 app.command('generate <type>', '生成指定类型的模板');
 
 app.help((args) => {
-  return args
-    .map((arg) => {
-      if (arg.body.startsWith('estarter')) {
-        return { body: getLOGO({ emptyLine: false, withVersion: false }) };
-      }
+  const result = [];
 
-      if (arg.title === 'Usage') {
-        arg.body = arg.body.replace('$ ', '');
-        return {
-          title: '用法',
-          body: arg.body,
-        };
-      }
+  args.forEach((arg) => {
+    let { title, body } = arg;
 
-      if (arg.title === 'Commands') {
-        return { title: '命令', body: arg.body.replace(/\n\s*$/, '') };
-      }
+    if (body.startsWith('estarter/')) {
+      return;
+    }
 
-      if (arg.title?.startsWith('For more info')) {
-        return null;
-      }
+    if (title?.startsWith('For more info')) {
+      return;
+    }
 
-      if (arg.title === 'Options') {
-        arg.body = arg.body.replace('Display version number', '查看当前版本号');
-        arg.body = arg.body.replace('Display this message', '查看帮助信息');
-        return { title: '选项', body: arg.body + '\n' };
-      }
+    if (title === 'Usage') {
+      title = '用法';
+      body = body.replace('$ ', '');
+    }
 
-      return arg;
-    })
-    .filter(Boolean);
+    if (title === 'Commands') {
+      title = '命令';
+    }
+
+    if (title === 'Options') {
+      title = '选项';
+      body = body.replace('Display version number', '查看当前版本号');
+      body = body.replace('Display this message', '查看帮助信息');
+      body = `${body}\n`;
+    }
+
+    result.push({ title, body });
+  });
+
+  return result;
 });
 
 app.usage('用于初始化项目的命令行工具');
 
-app
-  .command('')
-  .option('-v, --version', '查看版本号')
-  .action((options) => {
-    if (options && options.version) {
-      print('v0.0.1');
-      return;
-    }
-    print(getLOGO({ descExtra: '你可以通过 estarter -h 查看帮助信息。' }));
-  });
+console.log(getLOGO());
 
 app.parse();

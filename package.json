@@ -18,7 +18,8 @@
   "author": "",
   "license": "ISC",
   "simple-git-hooks": {
-    "pre-commit": "npx nano-staged"
+    "pre-commit": "npx nano-staged",
+    "commit-msg": "npx --no -- commitlint --edit ${1}"
   },
   "nano-staged": {
     "connect/*.{js,ts}": "eslint"
@@ -51,6 +52,11 @@
     "singleQuote": true,
     "endOfLine": "auto"
   },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/generator": "^7.20.7",
@@ -59,6 +65,8 @@
     "@babel/template": "^7.20.7",
     "@babel/traverse": "^7.20.12",
     "@babel/types": "^7.20.7",
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
     "@rollup/plugin-commonjs": "^23.0.0",
     "@rollup/plugin-image": "^3.0.2",
     "@rollup/plugin-json": "^4.1.0",
