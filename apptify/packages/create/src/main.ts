@@ -3,10 +3,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import minimist from 'minimist';
 import enquirer from 'enquirer';
-import { blue, bold, green } from 'kolorist';
+import { blue, bold, green, red } from 'kolorist';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirname = path.dirname(fileName);
 
 const LOGO = blue(`
  ________       ______     ______     _________   ________      ______     __  __
@@ -18,7 +18,7 @@ const LOGO = blue(`
     \\__\\/\\__\\/     \\_\\/       \\_\\/         \\__\\/   \\________\\/     \\_\\/        \\__\\/
 `);
 
-const print = (...args) => console.log(...args);
+const print = (...args: any[]) => console.log(...args);
 
 const start = async () => {
   const options = minimist(process.argv.slice(2));
@@ -27,7 +27,7 @@ const start = async () => {
 
   print(LOGO);
 
-  const answers = await enquirer.prompt([
+  const answers: any = await enquirer.prompt([
     {
       name: 'name',
       type: 'text',
@@ -52,7 +52,28 @@ const start = async () => {
   const name = $name || answers.name;
   const template = $template || answers.template;
 
-  fs.cpSync(path.join(__dirname, `./template-${template}`), path.join(process.cwd(), `./${name}`), { recursive: true });
+  const templateDir = path.join(dirname, `../template-${template}`);
+  if (!fs.existsSync(templateDir)) {
+    print(`${red('×')} ${bold('模板不存在, 请检查模板名称是否正确')}`);
+    return;
+  }
+
+  const targetDir = path.join(process.cwd(), `./${name}`);
+  if (fs.existsSync(targetDir)) {
+    const ask: any = await enquirer.prompt([
+      {
+        name: 'overwrite',
+        type: 'confirm',
+        message: '是否覆盖已存在的同名项目',
+      },
+    ]);
+    if (!ask.overwrite) {
+      print(`${red('×')} ${bold('因用户取消覆盖已中止创建')}`);
+      return;
+    }
+  }
+
+  fs.cpSync(templateDir, targetDir, { recursive: true });
 
   print(`${bold(green('\n创建完成!'))} 接下来你可以参照如下命令启动项目：`);
   print('  cd ./demo');

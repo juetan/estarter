@@ -1,11 +1,11 @@
-import { rollup } from "rollup";
+import { rollup } from 'rollup';
 
 const build = await rollup({
-  input: "index.js",
+  input: 'index.js',
 });
 
 const { output } = await build.generate({
-  format: "esm",
+  format: 'esm',
 });
 
 console.log(output);

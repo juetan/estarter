@@ -1,4 +1,4 @@
-import {program} from 'commander';
+import { program } from 'commander';
 import create from './command/create.js';
 
 program.name('estarter');

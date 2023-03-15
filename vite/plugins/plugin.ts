@@ -1,19 +1,17 @@
-import fs, { readFileSync } from "fs";
-import { basename, join } from "path";
-import { ResolvedConfig } from "vite";
-import { PluginOption, loadEnv } from "vite";
-const MODULE_ID = "virtual:app.ts";
-const MODULE_CONTENT = `export const sub = (x: number, y: number) => x - y;`;
+import fs from 'fs';
+import { PluginOption, ResolvedConfig } from 'vite';
 
-const includeExtesion = [".js", ".ts", ".jsx", ".tsx", ".vue", ".json"];
+const MODULE_ID = 'virtual:app.ts';
+const MODULE_CONTENT = `export const sub = (x: number, y: number) => x - y;`;
+const includeExtesion = ['.js', '.ts', '.jsx', '.tsx', '.vue', '.json'];
 
 export const plugin = (): PluginOption => {
   const assets: string[] = [];
   let config: ResolvedConfig;
 
   return {
-    name: "vite-plugin-a",
-    enforce: "pre",
+    name: 'vite-plugin-a',
+    enforce: 'pre',
 
     // https://cn.vitejs.dev/guide/api-plugin.html#configresolved
     configResolved(resolvedConfig) {
@@ -22,18 +20,16 @@ export const plugin = (): PluginOption => {
 
     // https://rollupjs.org/plugin-development/#resolveid
     async resolveId(id, importer, options) {
-      console.log(arguments);
-
       // 自定义模块(不存在的路径)
-      if (id === "app") {
+      if (id === 'app') {
         return MODULE_ID;
       }
 
       // 外部模块(不需要打包)
-      if (id === "path") {
+      if (id === 'path') {
         return {
           external: true,
-          id: "path",
+          id: 'path',
         };
       }
 
@@ -41,7 +37,7 @@ export const plugin = (): PluginOption => {
       const ext = config.env.VITE_EXTENSION;
       if (ext) {
         const resolution = await this.resolve(id, importer, { skipSelf: true, ...options });
-        const targetPath = resolution?.id.replace(/\.([^\.]*?)$/, `.${ext}.$1`);
+        const targetPath = resolution?.id.replace(/\.([^.]*?)$/, `.${ext}.$1`);
         console.log({ targetPath });
 
         if (targetPath && fs.existsSync(targetPath)) {

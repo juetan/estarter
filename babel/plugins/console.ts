@@ -1,38 +1,19 @@
-// @ts-nocheck
-
-const parser = require('@babel/parser');
-const traverse = require('@babel/traverse').default;
-const generate = require('@babel/generator').default;
-const types = require('@babel/types');
-const template = require('@babel/template').default;
-const { declare } = require('@babel/helper-plugin-utils');
-
-const sourceCode = `
-  console.log(1);
-
-  function func() {
-      console.info(2);
-  }
-
-  export default class Clazz {
-      say() {
-          console.debug(3);
-      }
-      render() {
-          return <div>{console.error(4)}</div>
-      }
-  }
-`;
+import parser from '@babel/parser';
+import traverse from '@babel/traverse';
+import generate from '@babel/generator';
+import types from '@babel/types';
+import template from '@babel/template';
+import { declare } from '@babel/helper-plugin-utils';
 
 // v1: 基本实现
-const v1 = (sourceCode) => {
+export const v1 = (sourceCode: string) => {
   const ast = parser.parse(sourceCode, {
     sourceType: 'unambiguous',
     plugins: ['jsx'],
   });
 
   traverse(ast, {
-    CallExpression(path, state) {
+    CallExpression(path) {
       if (
         types.isMemberExpression(path.node.callee) &&
         path.node.callee.object.name === 'console' &&
@@ -50,7 +31,7 @@ const v1 = (sourceCode) => {
 };
 
 // v2: 简化实现
-const v2 = (sourceCode) => {
+export const v2 = (sourceCode: string) => {
   const ast = parser.parse(sourceCode, {
     sourceType: 'unambiguous',
     plugins: ['jsx'],
@@ -59,7 +40,7 @@ const v2 = (sourceCode) => {
   const calleeNames = ['log', 'info', 'debug', 'error'].map((i) => `console.${i}`);
 
   traverse(ast, {
-    CallExpression(path, state) {
+    CallExpression(path) {
       const calleeName = generate(path.node.callee).code;
       if (calleeNames.includes(calleeName)) {
         const { line, column } = path.node.loc.start;
@@ -75,7 +56,7 @@ const v2 = (sourceCode) => {
 };
 
 // v3: 改为在前面生成单独的console语句
-const v3 = (sourceCode) => {
+export const v3 = (sourceCode: string) => {
   const ast = parser.parse(sourceCode, {
     sourceType: 'unambiguous',
     plugins: ['jsx'],
@@ -84,7 +65,7 @@ const v3 = (sourceCode) => {
   const calleeNames = ['log', 'info', 'debug', 'error'].map((i) => `console.${i}`);
 
   traverse(ast, {
-    CallExpression(path, state) {
+    CallExpression(path) {
       if (path.node.isNew) {
         return;
       }
@@ -111,38 +92,41 @@ const v3 = (sourceCode) => {
 };
 
 // v4: 改造为babel插件
-const v4 = declare((api, options, dirname) => {
-  const { types, template } = api;
+export const v4 = declare((api, options, dirname) => {
   const callerNames = ['log', 'info', 'debug', 'error'];
   const calleeNames = callerNames.map((i) => `console.${i}`);
+  const cache = new WeakMap();
 
-  console.log(options);
+  let order = 1;
   return {
     visitor: {
-      CallExpression(path, state) {
-        if (path.node.isNew) {
+      CallExpression(path) {
+        console.log(order++, path.node.loc?.start.line);
+        if (types.isMemberExpression(path.node.callee)) {
+          const { object, property } = path.node.callee;
+          if (!types.isIdentifier(object) || !types.isIdentifier(property)) return;
+          console.log(object.name, property.name, cache.has(path.node));
+        }
+        if (cache.has(path.node)) {
           return;
         }
-        const calleeName = generate(path.node.callee).code;
+        const calleeName = generate.default(path.node.callee).code;
         if (calleeNames.includes(calleeName)) {
           const { line, column } = path.node.loc.start;
 
           const expression = `console.log('v4: ${dirname} ${line}, ${column}')`;
           const node = template.expression(expression)();
-          node.isNew = true;
+          cache.set(node, true);
 
           if (path.findParent((p) => p.isJSXElement())) {
             path.replaceWith(types.arrayExpression([node, path.node]));
             path.skip();
           } else {
             path.insertBefore(node);
+            path.insertAfter(node);
           }
         }
       },
     },
   };
 });
-
-// v3(sourceCode);
-
-exports.plugin = v4;

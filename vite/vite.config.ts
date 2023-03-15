@@ -1,26 +1,15 @@
-import { defineConfig } from "vite";
-import { plugin } from "./plugin";
+import { defineConfig } from 'vite';
+import plugin from './plugins/multi-env.ts';
 
 export default defineConfig({
-  resolve: {
-    alias: [
-      {
-        find: '@',
-        replacement: '.'
-      }
-    ]
-  },
   build: {
     lib: {
-      entry: "a.module.ts",
-      name: "Todo",
-      formats: ["es"],
-      fileName: 'index'
+      entry: 'src/a.ts',
+      name: 'Todo',
+      formats: ['es'],
+      fileName: 'index',
     },
     rollupOptions: {},
-  },
-  esbuild: {
-    // banner: "//2dsesbuild",
   },
   plugins: [plugin()],
 });

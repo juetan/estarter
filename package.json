@@ -12,7 +12,9 @@
   "scripts": {
     "prepare": "npx simple-git-hooks",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "transformer:dev": "cd transformer && tsx watch index.ts"
+    "transformer:dev": "cd transformer && tsx watch index.ts",
+    "babel:dev": "cd babel && tsx watch index.ts",
+    "minimist:dev": "cd minimist && tsx index.ts"
   },
   "keywords": [],
   "author": "",
@@ -25,11 +27,17 @@
     "connect/*.{js,ts}": "eslint"
   },
   "eslintConfig": {
+    "root": true,
     "env": {
       "browser": true,
       "commonjs": true,
       "es2021": true
     },
+    "ignorePatterns": [
+      "**/node_modules",
+      "**/dist",
+      "**/build"
+    ],
     "extends": [
       "airbnb-base",
       "plugin:prettier/recommended"
@@ -44,7 +52,11 @@
     "rules": {
       "no-console": "off",
       "import/no-extraneous-dependencies": "off",
-      "max-classes-per-file": "off"
+      "max-classes-per-file": "off",
+      "no-unused-vars": "off",
+      "consistent-return": "off",
+      "import/prefer-default-export": "off",
+      "import/extensions": "off"
     }
   },
   "prettier": {
@@ -76,6 +88,47 @@
     },
     "npm": {
       "publish": false
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular",
+        "infile": "CHANGELOG.md",
+        "header": "# 历史变更",
+        "types": [
+          {
+            "type": "feat",
+            "section": "功能新增"
+          },
+          {
+            "type": "fix",
+            "section": "问题修复"
+          },
+          {
+            "type": "perf",
+            "section": "性能优化"
+          },
+          {
+            "type": "refactor",
+            "section": "代码重构"
+          },
+          {
+            "type": "style",
+            "section": "代码格式"
+          },
+          {
+            "type": "test",
+            "section": "测试用例"
+          },
+          {
+            "type": "chore",
+            "section": "构建工具"
+          },
+          {
+            "type": "revert",
+            "section": "版本回滚"
+          }
+        ]
+      }
     }
   },
   "devDependencies": {
@@ -88,10 +141,16 @@
     "@babel/types": "^7.20.7",
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
+    "@release-it/conventional-changelog": "^5.1.1",
     "@rollup/plugin-commonjs": "^23.0.0",
     "@rollup/plugin-image": "^3.0.2",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^14.1.0",
+    "@types/babel__generator": "^7.6.4",
+    "@types/babel__helper-plugin-utils": "^7.10.0",
+    "@types/babel__template": "^7.4.1",
+    "@types/babel__traverse": "^7.18.3",
+    "@types/express": "^4.17.17",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "axios": "^1.1.2",
@@ -104,6 +163,7 @@
     "create-vite": "^3.1.0",
     "cz-conventional-changelog": "^3.3.0",
     "download-git-repo": "^3.0.2",
+    "enquirer": "^2.3.6",
     "eslint": "^8.36.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.7.0",

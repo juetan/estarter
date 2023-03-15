@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img src="./image.png" alt="">
     <button class="btn">{{ text }}</button>
   </div>
 </template>
@@ -16,6 +17,8 @@ export default {
 
 <script setup name="AButton" lang="ts">
 const text = "按钮";
+
+const unuse = 'unuse';
 </script>
 
 <style lang="scss" scoped>

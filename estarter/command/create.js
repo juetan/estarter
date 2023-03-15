@@ -1,11 +1,11 @@
 import path from 'path';
 import fs from 'fs-extra';
 import inquirer from 'inquirer';
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 
 const askOverride = async () => {
-  const {override} = await inquirer.prompt([
+  const { override } = await inquirer.prompt([
     {
       name: 'override',
       type: 'confirm',
@@ -19,7 +19,7 @@ const askOverride = async () => {
 
 export default async (dirName, options) => {
   const dirPath = path.join(process.cwd(), dirName);
-  const {force} = options;
+  const { force } = options;
 
   if (fs.existsSync(dirPath)) {
     if (force) {
@@ -41,7 +41,7 @@ export default async (dirName, options) => {
       fs.copyFileSync(fromPath, destPath);
     }
     if (stat.isDirectory()) {
-      fs.mkdirSync(destPath, {recursive: true});
+      fs.mkdirSync(destPath, { recursive: true });
       for (const fileName of fs.readdirSync(fromPath)) {
         const iFromPath = path.resolve(fromPath, fileName);
         const iDestPath = path.resolve(destPath, fileName);
